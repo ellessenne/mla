@@ -8,7 +8,7 @@ func <- function(v, fu, m, nfmax, da, ga, tr, nql) {
     }
   }
 
-  dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "marqLevAlg")
+  dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "mla")
   idpos <- dchole$idpos
   fu <- dchole$fu
   result <- list(idpos = idpos, fu = fu)

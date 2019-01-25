@@ -1,6 +1,6 @@
 summary.marqLevAlg <- function(object, digits = 8, ...) {
   x <- object
-  if (!inherits(x, "marqLevAlg")) stop("use only with \"marqLevAlg\" objects")
+  if (!inherits(x, "mla")) stop("use only with \"marqLevAlg\" objects")
 
   cat(" \n")
   cat("Values:", "\n")

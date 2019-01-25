@@ -134,7 +134,7 @@ marqLevAlg <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, 
     }
     fu.int <- fu[1:(m * (m + 1) / 2)]
 
-    dsinv <- .Fortran("dsinv", fu.out = as.double(fu.int), as.integer(m), as.double(ep), ier = as.integer(0), det = as.double(0), PACKAGE = "marqLevAlg")
+    dsinv <- .Fortran("dsinv", fu.out = as.double(fu.int), as.integer(m), as.double(ep), ier = as.integer(0), det = as.double(0), PACKAGE = "mla")
 
     ier <- dsinv$ier
     fu[1:(m * (m + 1) / 2)] <- dsinv$fu.out
@@ -200,7 +200,7 @@ marqLevAlg <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, 
       }
     }
 
-    dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "marqLevAlg")
+    dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "mla")
     fu <- dchole$fu
     idpos <- dchole$idpos
 
@@ -224,7 +224,7 @@ marqLevAlg <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, 
         }
       }
 
-      dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "marqLevAlg")
+      dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "mla")
 
       idpos <- dchole$idpos
       fu <- dchole$fu
@@ -305,7 +305,7 @@ marqLevAlg <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, 
   if ((istop %in% 2:4) == F) istop <- 1
   cost <- proc.time() - ptm
   result <- list(cl = cl, ni = ni, ier = ier, istop = istop, v = fu[1:(m * (m + 1) / 2)], fn.value = -rl, b = b, ca = ca, cb = cb, rdm = dd, time = round(cost[3], 3))
-  class(result) <- "marqLevAlg"
+  class(result) <- "mla"
 
 
   cat("The program took", round(cost[3], 3), "seconds \n")

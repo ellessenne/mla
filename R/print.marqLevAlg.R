@@ -1,5 +1,5 @@
 print.marqLevAlg <- function(x, digits = 8, ...) {
-  if (!inherits(x, "marqLevAlg")) stop("use only with \"marqLevAlg\" objects")
+  if (!inherits(x, "mla")) stop("use only with \"marqLevAlg\" objects")
 
   cl <- x$cl
   cat(" \n")
