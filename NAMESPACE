@@ -1,4 +1,0 @@
-exportPattern("^[[:alpha:]]+")
-useDynLib(marqLevAlg)
-S3method(print,marqLevAlg)
-S3method(summary,marqLevAlg)

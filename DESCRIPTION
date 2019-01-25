@@ -1,13 +1,28 @@
-Package: marqLevAlg
+Package: mla
 Type: Package
-Title: An algorithm for least-squares curve fitting
-Version: 1.1
-Date: 2013-03-01
-Author: D. Commenges <Daniel.Commenges@isped.u-bordeaux2.fr>, M. Prague
-        <Melanie.Prague@isped.u-bordeaux2.fr> and A. Diakite
-Maintainer: Melanie Prague <Melanie.Prague@isped.u-bordeaux2.fr>
+Title: An Algorithm for Least-squares Curve Fitting
+Version: 0.0.0-9000
+Date: 2019-01-25
+Authors@R: c(
+  person(given = "Daniel",
+         family = "Commenges",
+         role = c("aut"),
+         email = "Daniel.Commenges@isped.u-bordeaux2.fr"),
+  person(given = "Melanie",
+         family = "Prague",
+         role = c("aut"),
+         email = "Melanie.Prague@isped.u-bordeaux2.fr"),
+  person(given = "A.",
+         family = "Diakite",
+         role = c("aut"),
+  person(given = "Alessandro",
+         family = "Gasparini",
+         role = c("aut", "cre"),
+         email = "ag475@leicester.ac.uk",
+         comment = c(ORCID = "0000-0002-8319-7624"))
+  )
+Maintainer: Alessandro Gasparini <ag475@leicester.ac.uk>
 Depends: R (>= 2.0.0)
-LazyLoad: yes
 Description: This algorithm provides a numerical solution to the
         problem of minimizing a function. This is more efficient than
         the Gauss-Newton-like algorithm when starting from points very
@@ -15,10 +30,13 @@ Description: This algorithm provides a numerical solution to the
         implemented (RDM) in addition to the usual stopping criterion :
         stopping rule is when the gradients are small enough in the
         parameters metric (GH-1G).
-License: GPL (>= 2.0)
-URL: http://www.r-project.org
-Encoding: latin1
-Repository: CRAN
-Packaged: 2013-03-18 09:50:39 UTC; mp8
+License: GPL (>= 3)
+URL: https://ellessenne.github.io/mla/
+BugReports: https://github.com/ellessenne/mla/issues
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+LazyData: true
+ByteCompile: true
+Encoding: UTF-8
 NeedsCompilation: yes
-Date/Publication: 2013-03-18 23:14:20
