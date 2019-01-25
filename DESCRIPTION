@@ -12,7 +12,7 @@ Authors@R: c(
          family = "Prague",
          role = c("aut"),
          email = "Melanie.Prague@isped.u-bordeaux2.fr"),
-  person(given = "A.",
+  person(given = "Amadou",
          family = "Diakite",
          role = c("aut"),
   person(given = "Alessandro",
