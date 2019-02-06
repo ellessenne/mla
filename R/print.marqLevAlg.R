@@ -1,3 +1,25 @@
+#' @title Summary of an `mla` object
+#' @description The function provides a summary of a `mla` optimisation.
+#' @param x An object of class `mla`.
+#' @param digits Number of digits to print in outputs. Default value is 8.
+#' @param ... Unused.
+#' @seealso mla
+#' @seealso summary.mla
+#' @author Daniel Commenges
+#' @author Melanie Prague
+#' @author Amadou Diakite
+#' @keywords print
+#' @export
+#' @examples
+#' f1 <- function(b) {
+#'   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
+#' }
+#' test.marq <- marqLevAlg(
+#'   b = c(8, 9), m = 2, maxiter = 100, epsa = 0.001, epsb = 0.001,
+#'   epsd = 0.001, fn = f1
+#' )
+#' 
+#' test.marq
 print.marqLevAlg <- function(x, digits = 8, ...) {
   if (!inherits(x, "mla")) stop("use only with \"marqLevAlg\" objects")
 

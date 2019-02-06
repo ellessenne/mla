@@ -1,3 +1,4 @@
+#' @keywords internal
 func <- function(v, fu, m, nfmax, da, ga, tr, nql) {
   for (i in 1:m) {
     ii <- i * (i + 1) / 2

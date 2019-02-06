@@ -1,5 +1,4 @@
-
-
+#' @keywords internal
 deriva_grad <- function(b, grad) {
   m <- length(b)
   bh2 <- b

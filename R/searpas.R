@@ -1,5 +1,4 @@
-
-
+#' @keywords internal
 searpas <- function(vw, step, b, delta, funcpa, res.out.error) {
   goto50 <- function(step, vlw2, fi1, fi2, fi3, b, delta, funcpa) {
     vm <- vlw2 - (step * (fi1 - fi3)) / (2 * (fi1 - 2 * fi2 + fi3))

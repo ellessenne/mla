@@ -1,3 +1,25 @@
+#' @title Summary of optimization.
+#' @description A short summary of parameters estimates via the `mla` algorithm.
+#' @param object An object of class `mla`.
+#' @param digits Number of digits to print in outputs. Default value is 8.
+#' @param ... Unused.
+#' @seealso mla
+#' @seealso print.mla
+#' @author Daniel Commenges
+#' @author Melanie Prague
+#' @author Amadou Diakite
+#' @keywords summary
+#' @export
+#' @examples
+#' f1 <- function(b) {
+#'   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
+#' }
+#' test.marq <- marqLevAlg(
+#'   b = c(8, 9), m = 2, maxiter = 100, epsa = 0.001, epsb = 0.001,
+#'   epsd = 0.001, fn = f1
+#' )
+#' 
+#' summary(test.marq)
 summary.marqLevAlg <- function(object, digits = 8, ...) {
   x <- object
   if (!inherits(x, "mla")) stop("use only with \"marqLevAlg\" objects")
