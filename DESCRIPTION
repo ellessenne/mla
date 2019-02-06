@@ -40,3 +40,5 @@ LazyData: true
 ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
+Suggests: 
+    testthat
