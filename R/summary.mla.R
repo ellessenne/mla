@@ -14,13 +14,13 @@
 #' f1 <- function(b) {
 #'   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
 #' }
-#' test.marq <- marqLevAlg(
+#' test.mla <- mla(
 #'   b = c(8, 9), m = 2, maxiter = 100, epsa = 0.001, epsb = 0.001,
 #'   epsd = 0.001, fn = f1
 #' )
 #' 
-#' summary(test.marq)
-summary.marqLevAlg <- function(object, digits = 8, ...) {
+#' summary(test.mla)
+summary.mla <- function(object, digits = 8, ...) {
   x <- object
   if (!inherits(x, "mla")) stop("use only with \"marqLevAlg\" objects")
 

@@ -1,9 +1,62 @@
-
-
-
-marqLevAlg <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 0.001, epsb = 0.001, epsd = 0.01, digits = 8, print.info = FALSE, blinding = TRUE, multipleTry = 25) {
+#' @title An algorithm for least-squares curve fitting.
+#' @description This algorithm provides a numerical solution to the problem of minimizing a function. This is more efficient than the Gauss-Newton-like algorithm when starting from points vey far from the final minimum. A new convergence test is implemented (RDM) in addition to the usual stopping criterion : stopping rule is when the gradients are small enough in the parameters metric (GH-1G).
+#' @param b An optional vector containing the initial values for the parameters. Default is 0.1 for every parameter.
+#' @param m An optional parameter if the vector of parameter is not missing compulsory if b is not given.
+#' @param fn The function to be minimized (or maximized), with argument the vector of parameters over which minimization is to take place.  It should return a scalar result.
+#' @param gr A function to return the gradient value for a specific point. If missing, finite-difference approximation will be used.
+#' @param hess A function to return the hessian matrix for a specific point. If missing, finite-difference approximation will be used.
+#' @param maxiter Optional maximum number of iterations for the marqLevAlg iterative algorithm. Default is 500.
+#' @param epsa Optional threshold for the convergence criterion based on the parameter stability. Default is 0.001.
+#' @param epsb Optional threshold for the convergence criterion based on the log-likelihood stability. Default is 0.001.
+#' @param epsd Optional threshold for the relative distance to minimum. This criterion has  the nice interpretation of estimating the ratio of the approximation error over the statistical error, thus it can be used for stopping the iterative process whathever the problem. Default is 0.01.
+#' @param digits Number of digits to print in outputs. Default value is 8.
+#' @param print.info Equals to TRUE if report (parameters at iteration, function value, convergence criterion ...) at each iteration is requested. Default value is FALSE.
+#' @param blinding Equals to TRUE if the algorithm is allowed to go on in case of an infinite or not definite value of function. Default value is FALSE.
+#' @param multipleTry Integer, different from 1 if the algorithm is allowed to go for the first iteration in case of an infinite or not definite value of gradients or hessian. This account for a starting point to far from the definition set. As many tries as requested in multipleTry will be done by changing the starting point of the algorithm. Default value is 25.
+#' @details Convergence criteria are very strict as they are based on derivatives of the log-likelihood in addition to the parameter and log-likelihood stability. In some cases, the program may not converge and reach the maximum number of iterations fixed at 500. In this case, the user should check that parameter estimates at the last iteration are not on the boundaries of the parameter space. If the parameters are on the boundaries of the parameter space, the identifiability of the model should be assessed. If not, the program should be run again with other initial values, with a higher maximum number of iterations or less strict convergence tolerances.
+#' @return A list with the following elements:
+#' * `cl`, summary of the call to the function `mla`;
+#' * `ni`, number of iterations before reaching stopping criterion;
+#' * `istop`, status of convergence: =1 if the convergence criteria were satisfied, =2 if the maximum number of iterations was reached, =4 if the algorithm encountered a problem in the function computation;
+#' * `v`, vector containing the upper triangle matrix of variance-covariance estimates at the stopping point;
+#' * `fn.value`, function evaluation at the stopping point;
+#' * `b`, stopping point value;
+#' * `ca`, convergence criteria for parameters stabilisation;
+#' * `cb`, convergence criteria for function stabilisation;
+#' * `rdm`, convergence criteria on the relative distance to minimum;
+#' * `time`, running time.
+#' @references Donald W. Marquardt (1963). _An algorithm for least-squares estimation of nonlinear parameters_. Journal of the Society for Industrial and Applied Mathematics, 11(2):431--441
+#' @references Daniel Commenges,  H Jacqmin-Gadda, C. Proust, J. Guedj (2006). _A Newton-like algorithm for likelihood maximization the robust-variance scoring algorithm_. arxiv:math/0610402v2
+#' @author Daniel Commenges
+#' @author Melanie Prague
+#' @author Amadou Diakite
+#' @keywords print algorithm optimization minimization maximisation package
+#' @export
+#' @examples
+#' ### 1
+#' ### initial values
+#' b <- c(8, 9)
+#' ### your function
+#' f1 <- function(b) {
+#'   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
+#' }
+#' ## Call
+#' test1 <- mla(b = b, fn = f1)
+#' 
+#' ### 2
+#' ### initial values
+#' b <- c(3, -1, 0, 1)
+#' ### your function
+#' f2 <- function(b) {
+#'   return((b[1] + 10 * b[2])^2 + 5 * (b[3] - b[4])^2 + (b[2] - 2 * b[3])^4 + 10 * (b[1] - b[4])^4)
+#' }
+#' 
+#' ## Call
+#' test2 <- mla(b = b, fn = f2)
+#' test2
+mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 0.001, epsb = 0.001, epsd = 0.01, digits = 8, print.info = FALSE, blinding = TRUE, multipleTry = 25) {
   cl <- match.call()
-  if (missing(m) & missing(b)) stop("The 'marqLevAlg' alogorithm needs a vector of parameters 'b' or his length 'm'")
+  if (missing(m) & missing(b)) stop("The 'mla' alogorithm needs a vector of parameters 'b' or his length 'm'")
   if (missing(m)) m <- length(b)
   if (missing(b)) b <- rep(0.1, m)
   if (length(b) != m) {

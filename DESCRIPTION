@@ -40,6 +40,10 @@ LazyData: true
 ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
+Imports:
+ Rcpp
 Suggests:
  knitr,
  testthat
+LinkingTo:
+ Rcpp
