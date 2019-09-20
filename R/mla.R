@@ -58,7 +58,7 @@
 #' }
 mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 0.001, epsb = 0.001, epsd = 0.01, digits = 8, print.info = FALSE, blinding = TRUE, multipleTry = 25) {
   cl <- match.call()
-  if (missing(m) & missing(b)) stop("The 'mla' alogorithm needs a vector of parameters 'b' or his length 'm'")
+  if (missing(m) & missing(b)) stop("The 'mla' algorithm needs a vector of parameters 'b' or his length 'm'")
   if (missing(m)) m <- length(b)
   if (missing(b)) b <- rep(0.1, m)
   if (length(b) != m) {
