@@ -40,9 +40,10 @@ ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
 Imports:
- Rcpp
+    Rcpp
 Suggests:
- knitr,
- testthat
+    knitr,
+    testthat,
+    covr
 LinkingTo:
- Rcpp
+    Rcpp
