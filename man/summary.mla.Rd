@@ -17,6 +17,7 @@
 A short summary of parameters estimates via the \code{mla} algorithm.
 }
 \examples{
+\dontrun{
 f1 <- function(b) {
   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
 }
@@ -26,6 +27,7 @@ test.mla <- mla(
 )
 
 summary(test.mla)
+}
 }
 \seealso{
 mla

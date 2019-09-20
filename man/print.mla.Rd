@@ -17,6 +17,7 @@
 The function provides a summary of a \code{mla} optimisation.
 }
 \examples{
+\dontrun{
 f1 <- function(b) {
   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
 }
@@ -26,6 +27,7 @@ test.mla <- mla(
 )
 
 test.mla
+}
 }
 \seealso{
 mla

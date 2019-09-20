@@ -2,7 +2,6 @@ Package: mla
 Type: Package
 Title: An Algorithm for Least-squares Curve Fitting
 Version: 0.0.0-9000
-Date: 2019-01-25
 Authors@R: c(
   person(given = "Daniel",
          family = "Commenges",

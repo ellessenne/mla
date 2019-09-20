@@ -33,6 +33,7 @@
 #' @keywords print algorithm optimization minimization maximisation package
 #' @export
 #' @examples
+#' \dontrun{
 #' ### 1
 #' ### initial values
 #' b <- c(8, 9)
@@ -42,7 +43,7 @@
 #' }
 #' ## Call
 #' test1 <- mla(b = b, fn = f1)
-#' 
+#'
 #' ### 2
 #' ### initial values
 #' b <- c(3, -1, 0, 1)
@@ -50,10 +51,11 @@
 #' f2 <- function(b) {
 #'   return((b[1] + 10 * b[2])^2 + 5 * (b[3] - b[4])^2 + (b[2] - 2 * b[3])^4 + 10 * (b[1] - b[4])^4)
 #' }
-#' 
+#'
 #' ## Call
 #' test2 <- mla(b = b, fn = f2)
 #' test2
+#' }
 mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 0.001, epsb = 0.001, epsd = 0.01, digits = 8, print.info = FALSE, blinding = TRUE, multipleTry = 25) {
   cl <- match.call()
   if (missing(m) & missing(b)) stop("The 'mla' alogorithm needs a vector of parameters 'b' or his length 'm'")
