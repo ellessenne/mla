@@ -87,10 +87,7 @@ mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 
     }
   }
 
-  utils::flush.console()
   ptm <- proc.time()
-  cat("\n")
-  cat("Be patient. The program is computing ...\n")
 
   ### initialisation
   binit <- b
@@ -359,11 +356,8 @@ mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 
 
   if ((istop %in% 2:4) == F) istop <- 1
   cost <- proc.time() - ptm
-  result <- list(cl = cl, ni = ni, ier = ier, istop = istop, v = fu[1:(m * (m + 1) / 2)], fn.value = -rl, b = b, ca = ca, cb = cb, rdm = dd, time = round(cost[3], 3))
+  result <- list(cl = cl, ni = ni, ier = ier, istop = istop, v = fu[1:(m * (m + 1) / 2)], fn.value = -rl, b = b, ca = ca, cb = cb, rdm = dd, time = cost[3])
   class(result) <- "mla"
-
-
-  cat("The program took", round(cost[3], 3), "seconds \n")
 
   result
 }
