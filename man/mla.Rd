@@ -67,7 +67,6 @@ This algorithm provides a numerical solution to the problem of minimizing a func
 Convergence criteria are very strict as they are based on derivatives of the log-likelihood in addition to the parameter and log-likelihood stability. In some cases, the program may not converge and reach the maximum number of iterations fixed at 500. In this case, the user should check that parameter estimates at the last iteration are not on the boundaries of the parameter space. If the parameters are on the boundaries of the parameter space, the identifiability of the model should be assessed. If not, the program should be run again with other initial values, with a higher maximum number of iterations or less strict convergence tolerances.
 }
 \examples{
-\dontrun{
 ### 1
 ### initial values
 b <- c(8, 9)
@@ -77,6 +76,7 @@ f1 <- function(b) {
 }
 ## Call
 test1 <- mla(b = b, fn = f1)
+test1
 
 ### 2
 ### initial values
@@ -89,7 +89,6 @@ f2 <- function(b) {
 ## Call
 test2 <- mla(b = b, fn = f2)
 test2
-}
 }
 \references{
 Donald W. Marquardt (1963). \emph{An algorithm for least-squares estimation of nonlinear parameters}. Journal of the Society for Industrial and Applied Mathematics, 11(2):431--441

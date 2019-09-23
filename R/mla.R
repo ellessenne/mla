@@ -34,7 +34,6 @@
 #' @keywords print algorithm optimization minimization maximisation package
 #' @export
 #' @examples
-#' \dontrun{
 #' ### 1
 #' ### initial values
 #' b <- c(8, 9)
@@ -44,6 +43,7 @@
 #' }
 #' ## Call
 #' test1 <- mla(b = b, fn = f1)
+#' test1
 #'
 #' ### 2
 #' ### initial values
@@ -56,7 +56,6 @@
 #' ## Call
 #' test2 <- mla(b = b, fn = f2)
 #' test2
-#' }
 mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 0.001, epsb = 0.001, epsd = 0.01, digits = 8, print.info = FALSE, blinding = TRUE, multipleTry = 25) {
   cl <- match.call()
   if (missing(m) & missing(b)) stop("The 'mla' algorithm needs a vector of parameters 'b' or his length 'm'")
@@ -355,10 +354,17 @@ mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 
     }
   }
 
+
+  # Compute hessian to return
+  if (!is.null(hess)) {
+    h <- -hess(b)
+  } else {
+    h <- -numDeriv::hessian(func = funcpa, x = b)
+  }
+
   if ((istop %in% 2:4) == F) istop <- 1
   cost <- proc.time() - ptm
-  result <- list(cl = cl, ni = ni, ier = ier, istop = istop, v = fu[1:(m * (m + 1) / 2)], fn.value = -rl, b = b, ca = ca, cb = cb, rdm = dd, time = cost[3])
-  class(result) <- "mla"
+  result <- list(par = b, value = -rl, ni = ni, convergence = istop, hessian = h, ca = ca, cb = cb, rdm = dd, time = cost[3])
 
-  result
+  return(result)
 }
