@@ -10,7 +10,7 @@
 #'
 #' @name mla
 #' @docType package
-#' @author Alessandro Gasparini (ag475@@leicester.ac.uk)
+#' @author Alessandro Gasparini (alessandro.gasparini@@ki.se)
 #' @references Donald W. Marquardt (1963). _An algorithm for least-squares estimation of nonlinear parameters_. Journal of the Society for Industrial and Applied Mathematics, 11(2):431--441
 #' @references Daniel Commenges,  H Jacqmin-Gadda, C. Proust, J. Guedj (2006). _A Newton-like algorithm for likelihood maximization the robust-variance scoring algorithm_. arxiv:math/0610402v2
 NULL

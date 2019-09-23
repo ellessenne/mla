@@ -101,13 +101,15 @@ Donald W. Marquardt (1963). \emph{An algorithm for least-squares estimation of n
 Daniel Commenges,  H Jacqmin-Gadda, C. Proust, J. Guedj (2006). \emph{A Newton-like algorithm for likelihood maximization the robust-variance scoring algorithm}. arxiv:math/0610402v2
 }
 \author{
-Alessandro Gasparini (ag475@leicester.ac.uk)
+Alessandro Gasparini (alessandro.gasparini@ki.se)
 
 Daniel Commenges
 
 Melanie Prague
 
 Amadou Diakite
+
+Alessandro Gasparini
 }
 \keyword{algorithm}
 \keyword{maximisation}

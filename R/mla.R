@@ -30,6 +30,7 @@
 #' @author Daniel Commenges
 #' @author Melanie Prague
 #' @author Amadou Diakite
+#' @author Alessandro Gasparini
 #' @keywords print algorithm optimization minimization maximisation package
 #' @export
 #' @examples

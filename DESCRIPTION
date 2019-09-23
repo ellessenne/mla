@@ -17,10 +17,10 @@ Authors@R: c(
   person(given = "Alessandro",
          family = "Gasparini",
          role = c("aut", "cre"),
-         email = "ag475@leicester.ac.uk",
+         email = "alessandro.gasparini@ki.se",
          comment = c(ORCID = "0000-0002-8319-7624"))
   )
-Maintainer: Alessandro Gasparini <ag475@leicester.ac.uk>
+Maintainer: Alessandro Gasparini <alessandro.gasparini@ki.se>
 Depends: R (>= 2.0.0)
 Description: This algorithm provides a numerical solution to the
         problem of minimizing a function. This is more efficient than
