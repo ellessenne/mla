@@ -65,27 +65,6 @@ testthat::test_that("Test #2.2", {
   testthat::expect_equal(object = t2.3$b, expected = rep(0, 4), tolerance = 1e-3)
 })
 
-### Third test
-f <- function(x) {
-  ((x[1] - 10)^30 + (x[2] - 3)^20)
-}
-
-testthat::test_that("Test #3", {
-  t3 <- mla::mla(b = c(0, 0), maxiter = 10000, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f)
-  testthat::expect_equal(object = length(t3$b), expected = 2)
-  testthat::expect_equal(object = t3$b, expected = c(10, 3), tolerance = 1e-3)
-})
-
-### Fourth test
-f <- function(x) {
-  x^2
-}
-
-testthat::test_that("Test #4", {
-  t4 <- mla::mla(b = 10, maxiter = 10000, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f)
-  testthat::expect_equal(object = length(t4$b), expected = 1)
-  testthat::expect_equal(object = t4$b, expected = 0, tolerance = 1e-4)
-})
 
 ### Rosenbrock Banana function
 fr <- function(x) {
