@@ -6,46 +6,35 @@
 \alias{mla-package}
 \title{An Algorithm for Least-squares Curve Fitting}
 \usage{
-mla(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500,
-  epsa = 0.001, epsb = 0.001, epsd = 0.01, digits = 8,
-  print.info = FALSE, blinding = TRUE, multipleTry = 25)
+mla(par, fn, gr = NULL, hessian = NULL, control = list(),
+  verbose = FALSE)
 }
 \arguments{
-\item{b}{An optional vector containing the initial values for the parameters. Default is 0.1 for every parameter.}
+\item{par}{A vector containing the initial values for the parameters.}
 
-\item{m}{An optional parameter if the vector of parameter is not missing compulsory if b is not given.}
+\item{fn}{The function to be minimized (or maximized), with argument the vector of parameters over which minimization is to take place.
+It should return a scalar result.}
 
-\item{fn}{The function to be minimized (or maximized), with argument the vector of parameters over which minimization is to take place.  It should return a scalar result.}
+\item{gr}{A function to return the gradient value for a specific point.
+If missing, finite-difference approximation will be used.}
 
-\item{gr}{A function to return the gradient value for a specific point. If missing, finite-difference approximation will be used.}
+\item{hessian}{A function to return the hessian matrix for a specific point.
+If missing, finite-difference approximation will be used.}
 
-\item{hess}{A function to return the hessian matrix for a specific point. If missing, finite-difference approximation will be used.}
+\item{control}{A list of control parameters.
+See ‘Details’.}
 
-\item{maxiter}{Optional maximum number of iterations for the marqLevAlg iterative algorithm. Default is 500.}
-
-\item{epsa}{Optional threshold for the convergence criterion based on the parameter stability. Default is 0.001.}
-
-\item{epsb}{Optional threshold for the convergence criterion based on the log-likelihood stability. Default is 0.001.}
-
-\item{epsd}{Optional threshold for the relative distance to minimum. This criterion has  the nice interpretation of estimating the ratio of the approximation error over the statistical error, thus it can be used for stopping the iterative process whathever the problem. Default is 0.01.}
-
-\item{digits}{Number of digits to print in outputs. Default value is 8.}
-
-\item{print.info}{Equals to TRUE if report (parameters at iteration, function value, convergence criterion ...) at each iteration is requested. Default value is FALSE.}
-
-\item{blinding}{Equals to TRUE if the algorithm is allowed to go on in case of an infinite or not definite value of function. Default value is FALSE.}
-
-\item{multipleTry}{Integer, different from 1 if the algorithm is allowed to go for the first iteration in case of an infinite or not definite value of gradients or hessian. This account for a starting point to far from the definition set. As many tries as requested in multipleTry will be done by changing the starting point of the algorithm. Default value is 25.}
+\item{verbose}{Equals to TRUE if report (parameters at iteration, function value, convergence criterion ...) at each iteration is requested.
+Default value is FALSE.}
 }
 \value{
 A list with the following elements:
 \itemize{
-\item \code{cl}, summary of the call to the function \code{mla};
+\item \code{par}, stopping point value;
+\item \code{value}, function evaluation at the stopping point;
 \item \code{ni}, number of iterations before reaching stopping criterion;
-\item \code{istop}, status of convergence: =1 if the convergence criteria were satisfied, =2 if the maximum number of iterations was reached, =4 if the algorithm encountered a problem in the function computation;
-\item \code{v}, vector containing the upper triangle matrix of variance-covariance estimates at the stopping point;
-\item \code{fn.value}, function evaluation at the stopping point;
-\item \code{b}, stopping point value;
+\item \code{convergence}, status of convergence: =1 if the convergence criteria were satisfied, =2 if the maximum number of iterations was reached, =4 if the algorithm encountered a problem in the function computation;
+\item \code{hessian}, a symmetric matrix giving an estimate of the Hessian at the solution found;
 \item \code{ca}, convergence criteria for parameters stabilisation;
 \item \code{cb}, convergence criteria for function stabilisation;
 \item \code{rdm}, convergence criteria on the relative distance to minimum;
@@ -61,10 +50,37 @@ implemented (RDM) in addition to the usual stopping criterion:
 stopping rule is when the gradients are small enough in the
 parameters metric (GH-1G).
 
-This algorithm provides a numerical solution to the problem of minimizing a function. This is more efficient than the Gauss-Newton-like algorithm when starting from points vey far from the final minimum. A new convergence test is implemented (RDM) in addition to the usual stopping criterion : stopping rule is when the gradients are small enough in the parameters metric (GH-1G).
+This algorithm provides a numerical solution to the problem of minimizing a function.
+This is more efficient than the Gauss-Newton-like algorithm when starting from points very far from the final minimum.
+A new convergence test is implemented (RDM) in addition to the usual stopping criterion: stopping rule is when the gradients are small enough in the parameters metric (GH-1G).
 }
 \details{
-Convergence criteria are very strict as they are based on derivatives of the log-likelihood in addition to the parameter and log-likelihood stability. In some cases, the program may not converge and reach the maximum number of iterations fixed at 500. In this case, the user should check that parameter estimates at the last iteration are not on the boundaries of the parameter space. If the parameters are on the boundaries of the parameter space, the identifiability of the model should be assessed. If not, the program should be run again with other initial values, with a higher maximum number of iterations or less strict convergence tolerances.
+Convergence criteria are very strict as they are based on derivatives of the log-likelihood in addition to the parameter and log-likelihood stability.
+In some cases, the program may not converge and reach the maximum number of iterations fixed at 500.
+In this case, the user should check that parameter estimates at the last iteration are not on the boundaries of the parameter space.
+If the parameters are on the boundaries of the parameter space, the identifiability of the model should be assessed.
+If not, the program should be run again with other initial values, with a higher maximum number of iterations or less strict convergence tolerances.
+The \code{control} argument is a list that can supply any of the following components:
+\itemize{
+\item \code{maxiter} Optional maximum number of iterations for the iterative algorithm.
+Default is 500.
+\item \code{eps} Not documented (yet);
+\item \code{epsa} Optional threshold for the convergence criterion based on the parameter stability.
+Default is 0.001.
+\item \code{epsb} Optional threshold for the convergence criterion based on the log-likelihood stability.
+Default is 0.001.
+\item \code{epsd} Optional threshold for the relative distance to minimum.
+This criterion has the nice interpretation of estimating the ratio of the approximation error over the statistical error, thus it can be used for stopping the iterative process whathever the problem.
+Default is 0.01.
+\item \code{digits} Number of digits to print in outputs.
+Default value is 8.
+\item \code{blinding} Equals to TRUE if the algorithm is allowed to go on in case of an infinite or not definite value of function.
+Default value is FALSE.
+\item \code{multipleTry} Integer, different from 1 if the algorithm is allowed to go for the first iteration in case of an infinite or not definite value of gradients or hessian.
+This account for a starting point to far from the definition set.
+As many tries as requested in \code{multipleTry} will be done by changing the starting point of the algorithm.
+Default value is 25.
+}
 }
 \examples{
 ### 1
@@ -75,7 +91,7 @@ f1 <- function(b) {
   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
 }
 ## Call
-test1 <- mla(b = b, fn = f1)
+test1 <- mla(par = b, fn = f1)
 test1
 
 ### 2
@@ -87,7 +103,7 @@ f2 <- function(b) {
 }
 
 ## Call
-test2 <- mla(b = b, fn = f2)
+test2 <- mla(par = b, fn = f2)
 test2
 }
 \references{

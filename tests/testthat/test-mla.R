@@ -12,33 +12,23 @@ hes <- function(b) {
 }
 
 testthat::test_that("Test #1.1", {
-  t1.1 <- mla::mla(m = 2, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f1)
+  t1.1 <- mla::mla(par = c(8, 9), control = list(maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = f1)
   testthat::expect_equal(object = t1.1$par, expected = c(5, 6), tolerance = 1e-6)
 })
 
-testthat::test_that("Test #1.2", {
-  t1.2 <- mla::mla(b = c(8, 9), maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f1)
+testthat::test_that("Test #1.2 (with gradient)", {
+  t1.2 <- mla::mla(par = c(8, 9), control = list(maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = f1, gr = gr)
   testthat::expect_equal(object = t1.2$par, expected = c(5, 6), tolerance = 1e-6)
 })
 
-testthat::test_that("Test #1.3", {
-  t1.3 <- mla::mla(b = c(8, 9), m = 2, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f1)
+testthat::test_that("Test #1.3 (with hessian)", {
+  t1.3 <- mla::mla(par = c(8, 9), control = list(maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = f1, hessian = hes)
   testthat::expect_equal(object = t1.3$par, expected = c(5, 6), tolerance = 1e-6)
 })
 
-testthat::test_that("Test #1.4 (with gradient)", {
-  t1.4 <- mla::mla(b = c(8, 9), m = 2, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f1, gr = gr)
-  testthat::expect_equal(object = t1.4$par, expected = c(5, 6), tolerance = 1e-6)
-})
-
-testthat::test_that("Test #1.5 (with hessian)", {
-  t1.5 <- mla::mla(b = c(8, 9), m = 2, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f1, hess = hes)
-  testthat::expect_equal(object = t1.5$par, expected = c(5, 6), tolerance = 1e-6)
-})
-
-testthat::test_that("Test #1.6 (with gradient and hessian)", {
-  t1.6 <- mla::mla(b = c(8, 9), m = 2, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f1, gr = gr, hess = hes)
-  testthat::expect_equal(object = t1.6$par, expected = c(5, 6), tolerance = 1e-5)
+testthat::test_that("Test #1.4 (with gradient and hessian)", {
+  t1.4 <- mla::mla(par = c(8, 9), control = list(maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = f1, gr = gr, hessian = hes)
+  testthat::expect_equal(object = t1.4$par, expected = c(5, 6), tolerance = 1e-5)
 })
 
 
@@ -48,23 +38,10 @@ f2 <- function(b) {
 }
 
 testthat::test_that("Test #2.1", {
-  t2.1 <- mla::mla(m = 4, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f2)
-  testthat::expect_equal(object = length(t2.1$par), expected = 4)
-  testthat::expect_equal(object = t2.1$par, expected = rep(0, 4), tolerance = 1e-3)
-})
-
-testthat::test_that("Test #2.2", {
-  t2.2 <- mla::mla(b = c(3, -1, 0, 1), maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f2)
+  t2.2 <- mla::mla(par = c(3, -1, 0, 1), control = list(maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = f2)
   testthat::expect_equal(object = length(t2.2$par), expected = 4)
   testthat::expect_equal(object = t2.2$par, expected = rep(0, 4), tolerance = 1e-3)
 })
-
-testthat::test_that("Test #2.2", {
-  t2.3 <- mla::mla(b = c(3, -1, 0, 1), m = 4, maxiter = 100, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = f2)
-  testthat::expect_equal(object = length(t2.3$par), expected = 4)
-  testthat::expect_equal(object = t2.3$par, expected = rep(0, 4), tolerance = 1e-3)
-})
-
 
 ### Rosenbrock Banana function
 fr <- function(x) {
@@ -82,19 +59,11 @@ grr <- function(x) { ## Gradient of 'fr'
 }
 
 testthat::test_that("Test: Rosenbrock Banana function", {
-  t <- mla::mla(m = 2, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = fr)
+  t <- mla::mla(par = c(-1.2, 1), control = list(epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = fr)
   testthat::expect_equal(object = length(t$par), expected = 2)
   testthat::expect_equal(object = t$par, expected = c(1, 1), tolerance = 1e-4)
 
-  t <- mla::mla(b = c(-1.2, 1), epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = fr)
-  testthat::expect_equal(object = length(t$par), expected = 2)
-  testthat::expect_equal(object = t$par, expected = c(1, 1), tolerance = 1e-4)
-
-  t <- mla::mla(m = 2, epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = fr, gr = grr)
-  testthat::expect_equal(object = length(t$par), expected = 2)
-  testthat::expect_equal(object = t$par, expected = c(1, 1), tolerance = 1e-6)
-
-  t <- mla::mla(b = c(-1.2, 1), epsa = fit.tol, epsb = fit.tol, epsd = fit.tol, fn = fr, gr = grr)
+  t <- mla::mla(par = c(-1.2, 1), control = list(epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = fr, gr = grr)
   testthat::expect_equal(object = length(t$par), expected = 2)
   testthat::expect_equal(object = t$par, expected = c(1, 1), tolerance = 1e-6)
 })

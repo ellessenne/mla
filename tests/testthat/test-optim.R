@@ -10,7 +10,7 @@ gr <- function(b) {
 b <- c(8, 9)
 
 testthat::test_that("Test 1, comparison with optim", {
-  t1.mla <- mla::mla(b = b, fn = f1)
+  t1.mla <- mla::mla(par = b, fn = f1)
   t1.optim.nm <- optim(par = b, fn = f1)
   t1.optim.bfgs <- optim(par = b, fn = f1, method = "BFGS")
   testthat::expect_equal(object = t1.mla$par, expected = t1.optim.nm$par, tolerance = 1e-4)
@@ -18,7 +18,7 @@ testthat::test_that("Test 1, comparison with optim", {
 })
 
 testthat::test_that("Test 1 with gradient, comparison with optim", {
-  t1.gr.mla <- mla::mla(b = b, maxiter = 100, fn = f1, gr = gr)
+  t1.gr.mla <- mla::mla(par = b, fn = f1, gr = gr)
   t1.gr.optim.nm <- optim(par = b, fn = f1, gr = gr)
   t1.gr.optim.bfgs <- optim(par = b, fn = f1, gr = gr, method = "BFGS")
   testthat::expect_equal(object = t1.gr.mla$par, expected = t1.gr.optim.nm$par, tolerance = 1e-4)
@@ -42,7 +42,7 @@ grr <- function(x) { ## Gradient of 'fr'
 b <- c(-1.2, 1)
 
 testthat::test_that("Test 2: Rosenbrock Banana function, comparison with optim", {
-  t2.mla <- mla::mla(b = b, fn = fr)
+  t2.mla <- mla::mla(par = b, fn = fr)
   t2.optim.nm <- optim(par = b, fn = fr)
   t2.optim.bfgs <- optim(par = b, fn = fr, method = "BFGS")
   testthat::expect_equal(object = t2.mla$par, expected = t2.optim.nm$par, tolerance = 1e-3)
@@ -50,7 +50,7 @@ testthat::test_that("Test 2: Rosenbrock Banana function, comparison with optim",
 })
 
 testthat::test_that("Test 2: Rosenbrock Banana function with gradient, comparison with optim", {
-  t2.gr.mla <- mla::mla(b = b, fn = fr, gr = grr)
+  t2.gr.mla <- mla::mla(par = b, fn = fr, gr = grr)
   t2.gr.optim.nm <- optim(par = b, fn = fr, gr = grr)
   t2.gr.optim.bfgs <- optim(par = b, fn = fr, gr = grr, method = "BFGS")
   testthat::expect_equal(object = t2.gr.mla$par, expected = t2.gr.optim.nm$par, tolerance = 1e-3)
