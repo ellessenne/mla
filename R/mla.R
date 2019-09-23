@@ -71,7 +71,7 @@ mla <- function(b, m = FALSE, fn, gr = NULL, hess = NULL, maxiter = 500, epsa = 
     }
   }
 
-  if (missing(fn)) stop("The argument 'funcpa' is missing.")
+  if (missing(fn)) stop("The argument 'fn' is missing.")
 
   funcpa <- function(b) {
     -fn(b)
