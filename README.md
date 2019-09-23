@@ -12,5 +12,5 @@ coverage](https://codecov.io/gh/ellessenne/mla/branch/master/graph/badge.svg)](h
 
 `mla` is a fork of the R package
 [marqLevAlg](https://CRAN.R-project.org/package=marqLevAlg) to update
-the codebase to modern standards, as it has not been updated in over 5
-years.
+the codebase to modern standards and make it a plug-in replacement for
+the `optim` function in base R.
