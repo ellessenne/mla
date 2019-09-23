@@ -40,6 +40,7 @@ ByteCompile: true
 Encoding: UTF-8
 NeedsCompilation: yes
 Imports:
+    numDeriv,
     Rcpp
 Suggests:
     knitr,
