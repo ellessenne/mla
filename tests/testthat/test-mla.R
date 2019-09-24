@@ -43,7 +43,7 @@ testthat::test_that("Test #2.1", {
   testthat::expect_equal(object = t2.2$par, expected = rep(0, 4), tolerance = 1e-3)
 })
 
-### Rosenbrock Banana function
+### Rosenbrock function
 fr <- function(x) {
   x1 <- x[1]
   x2 <- x[2]
@@ -58,7 +58,7 @@ grr <- function(x) { ## Gradient of 'fr'
   )
 }
 
-testthat::test_that("Test: Rosenbrock Banana function", {
+testthat::test_that("Test: Rosenbrock function", {
   t <- mla::mla(par = c(-1.2, 1), control = list(epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = fr)
   testthat::expect_equal(object = length(t$par), expected = 2)
   testthat::expect_equal(object = t$par, expected = c(1, 1), tolerance = 1e-4)
@@ -66,4 +66,13 @@ testthat::test_that("Test: Rosenbrock Banana function", {
   t <- mla::mla(par = c(-1.2, 1), control = list(epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = fr, gr = grr)
   testthat::expect_equal(object = length(t$par), expected = 2)
   testthat::expect_equal(object = t$par, expected = c(1, 1), tolerance = 1e-6)
+})
+
+### Booth function
+fun <- function(par) (par[1] + 2 * par[2] - 7)^2 + (2 * par[1] + par[2] - 5)^2
+
+testthat::test_that("Test: Booth function", {
+  t <- mla::mla(par = c(-1.2, 1), control = list(epsa = fit.tol, epsb = fit.tol, epsd = fit.tol), fn = fun)
+  testthat::expect_equal(object = length(t$par), expected = 2)
+  testthat::expect_equal(object = t$par, expected = c(1, 3), tolerance = 1e-6)
 })
