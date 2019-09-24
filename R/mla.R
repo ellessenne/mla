@@ -154,14 +154,14 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
       rl <- funcpa(b)
 
       if (missing(hessian)) {
-        deriv <- deriva_grad(b, grad)
-        v <- c(v, deriv$hessian, grad(b))
+        h <- -numDeriv::hessian(func = funcpa, x = b)
+        v <- c(v, h[upper.tri(h, diag = TRUE)], grad(b))
       } else {
-        tmp.hessian <- hessian(b)
-        if (is.matrix(tmp.hessian)) {
-          tmp.hessian <- tmp.hessian[upper.tri(tmp.hessian, diag = T)]
+        h <- hessian(b)
+        if (is.matrix(h)) {
+          h <- h[upper.tri(t, diag = TRUE)]
         }
-        v <- c(v, tmp.hessian, grad(b))
+        v <- c(v, h, grad(b))
       }
     }
     if ((sum(is.finite(b)) == m) && !is.finite(rl)) {
