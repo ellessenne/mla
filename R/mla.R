@@ -45,8 +45,7 @@
 #' * `hessian`, a symmetric matrix giving an estimate of the Hessian at the solution found;
 #' * `ca`, convergence criteria for parameters stabilisation;
 #' * `cb`, convergence criteria for function stabilisation;
-#' * `rdm`, convergence criteria on the relative distance to minimum;
-#' * `time`, running time.
+#' * `rdm`, convergence criteria on the relative distance to minimum.
 #' @references Donald W. Marquardt (1963). _An algorithm for least-squares estimation of nonlinear parameters_. Journal of the Society for Industrial and Applied Mathematics, 11(2):431--441
 #' @references Daniel Commenges,  H Jacqmin-Gadda, C. Proust, J. Guedj (2006). _A Newton-like algorithm for likelihood maximization the robust-variance scoring algorithm_. arxiv:math/0610402v2
 #' @author Daniel Commenges
@@ -92,10 +91,6 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
   con <- list(maxiter = 500, eps = 1e-7, epsa = 0.001, epsb = 0.001, epsd = 0.01, print.info = FALSE, blinding = TRUE, multipleTry = 25, digits = 8)
   nmsC <- names(con)
   con[(namc <- names(control))] <- control
-
-  # Start timer
-
-  ptm <- proc.time()
 
   ### initialisation
   th <- 1e-5
@@ -370,8 +365,7 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
   }
 
   if ((istop %in% 2:4) == F) istop <- 1
-  cost <- proc.time() - ptm
-  result <- list(par = b, value = -rl, ni = ni, convergence = istop, hessian = h, ca = ca, cb = cb, rdm = dd, time = cost[3])
+  result <- list(par = b, value = -rl, ni = ni, convergence = istop, hessian = h, ca = ca, cb = cb, rdm = dd)
 
   return(result)
 }

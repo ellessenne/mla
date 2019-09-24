@@ -37,8 +37,7 @@ A list with the following elements:
 \item \code{hessian}, a symmetric matrix giving an estimate of the Hessian at the solution found;
 \item \code{ca}, convergence criteria for parameters stabilisation;
 \item \code{cb}, convergence criteria for function stabilisation;
-\item \code{rdm}, convergence criteria on the relative distance to minimum;
-\item \code{time}, running time.
+\item \code{rdm}, convergence criteria on the relative distance to minimum.
 }
 }
 \description{
