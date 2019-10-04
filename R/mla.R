@@ -21,14 +21,14 @@
 #' The `control` argument is a list that can supply any of the following components:
 #' * `maxiter` Optional maximum number of iterations for the iterative algorithm.
 #' Default is 500.
-#' * `eps` Not documented (yet);
+#' * `eps` Not documented (yet). Default is 1e-6.
 #' * `epsa` Optional threshold for the convergence criterion based on the parameter stability.
-#' Default is 0.001.
+#' Default is 1e-6.
 #' * `epsb` Optional threshold for the convergence criterion based on the log-likelihood stability.
-#' Default is 0.001.
+#' Default is 1e-6.
 #' * `epsd` Optional threshold for the relative distance to minimum.
 #' This criterion has the nice interpretation of estimating the ratio of the approximation error over the statistical error, thus it can be used for stopping the iterative process whathever the problem.
-#' Default is 0.01.
+#' Default is 1e-6.
 #' * `digits` Number of digits to print in outputs.
 #' Default value is 8.
 #' * `blinding` Equals to TRUE if the algorithm is allowed to go on in case of an infinite or not definite value of function.
@@ -88,7 +88,7 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
   if (!is.null(gr)) grad <- function(b) -gr(b)
 
   # Control arguments
-  con <- list(maxiter = 500, eps = 1e-7, epsa = 0.001, epsb = 0.001, epsd = 0.01, print.info = FALSE, blinding = TRUE, multipleTry = 25, digits = 8)
+  con <- list(maxiter = 500, eps = 1e-6, epsa = 1e-6, epsb = 1e-6, epsd = 1e-6, print.info = FALSE, blinding = TRUE, multipleTry = 25, digits = 8)
   nmsC <- names(con)
   con[(namc <- names(control))] <- control
 

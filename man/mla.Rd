@@ -63,14 +63,14 @@ The \code{control} argument is a list that can supply any of the following compo
 \itemize{
 \item \code{maxiter} Optional maximum number of iterations for the iterative algorithm.
 Default is 500.
-\item \code{eps} Not documented (yet);
+\item \code{eps} Not documented (yet). Default is 1e-6.
 \item \code{epsa} Optional threshold for the convergence criterion based on the parameter stability.
-Default is 0.001.
+Default is 1e-6.
 \item \code{epsb} Optional threshold for the convergence criterion based on the log-likelihood stability.
-Default is 0.001.
+Default is 1e-6.
 \item \code{epsd} Optional threshold for the relative distance to minimum.
 This criterion has the nice interpretation of estimating the ratio of the approximation error over the statistical error, thus it can be used for stopping the iterative process whathever the problem.
-Default is 0.01.
+Default is 1e-6.
 \item \code{digits} Number of digits to print in outputs.
 Default value is 8.
 \item \code{blinding} Equals to TRUE if the algorithm is allowed to go on in case of an infinite or not definite value of function.
