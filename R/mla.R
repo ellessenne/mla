@@ -134,7 +134,7 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
     }
     res.out.error <- list("old.b" = round(old.b, con$digits), "old.rl" = round(old.rl, con$digits), "old.ca" = round(old.ca, con$digits), "old.cb" = round(old.cb, con$digits), "old.dd" = round(old.dd, con$digits))
 
-    if (missing(gr)) {
+    if (is.null(gr)) {
       deriv <- deriva(b, funcpa)
       v <- deriv$v
       rl <- deriv$rl
@@ -153,7 +153,7 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
       v <- NULL
       rl <- funcpa(b)
 
-      if (missing(hessian)) {
+      if (is.null(hessian)) {
         h <- -numDeriv::hessian(func = funcpa, x = b)
         v <- c(v, h[upper.tri(h, diag = TRUE)], grad(b))
       } else {
