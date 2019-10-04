@@ -188,28 +188,19 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
     }
     fu.int <- fu[1:(m * (m + 1) / 2)]
 
-    dsinv <- .Fortran("dsinv", fu.out = as.double(fu.int), as.integer(m), as.double(ep), ier = as.integer(0), det = as.double(0), PACKAGE = "mla")
-
-    ier <- dsinv$ier
+    # Invert hessian
+    tmp.h <- matrix(nrow = m, ncol = m)
+    tmp.h[upper.tri(tmp.h, diag = TRUE)] <- fu.int
+    tmp.h[lower.tri(tmp.h, diag = TRUE)] <- fu.int
+    dsinv <- list()
+    dsinv$fu.out <- solve(tmp.h)[upper.tri(tmp.h, diag = TRUE)]
     fu[1:(m * (m + 1) / 2)] <- dsinv$fu.out
-    if (ier == -1) {
-      # dd <- epsd+1 #without dd approximation by Pierre Joly
-      v_tmp <- v[(m * (m + 1) / 2 + 1):(m * (m + 3) / 2)]
-      dd <- sum(v_tmp * v_tmp)
-    } else {
-      dd <- ghg(m, v, fu)$ghg / m
-    }
 
     if (verbose) {
       cat("------------------ iteration ", ni, "------------------\n")
       cat("Log_likelihood ", round(-rl, con$digits), "\n")
       cat("Convergence criteria: parameters stability=", round(ca, con$digits), "\n")
       cat("                    : likelihood stability=", round(cb, con$digits), "\n")
-      if (ier == -1) {
-        cat("                    : Matrix inversion for RDM failed \n")
-      } else {
-        cat("                    : Matrix inversion for RDM successful \n")
-      }
       cat("                    : relative distance to maximum(RDM)=", round(dd, con$digits), "\n")
 
       nom.par <- paste("parameter", c(1:m), sep = "")
