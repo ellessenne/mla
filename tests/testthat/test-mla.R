@@ -1,5 +1,5 @@
 ### First test
-fit.tol <- 1e-6
+fit.tol <- 1e-8
 
 f1 <- function(b) {
   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
