@@ -7,6 +7,7 @@
 #' It should return a scalar result.
 #' @param gr A function to return the gradient value for a specific point.
 #' If missing, finite-difference approximation will be used.
+#' @param ... Further arguments to be passed to fn and gr.
 #' @param hessian A function to return the hessian matrix for a specific point.
 #' If missing, finite-difference approximation will be used.
 #' @param control A list of control parameters.
@@ -84,8 +85,8 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
   if (missing(fn)) stop("The argument 'fn' is missing.")
   b <- par
   m <- length(b)
-  funcpa <- function(b) -fn(b)
-  if (!is.null(gr)) grad <- function(b) -gr(b)
+  funcpa <- function(b) -fn(b, ...)
+  if (!is.null(gr)) grad <- function(b) -gr(b, ...)
 
   # Control arguments
   con <- list(maxiter = 500, eps = 1e-6, epsa = 1e-6, epsb = 1e-6, epsd = 1e-6, print.info = FALSE, blinding = TRUE, multipleTry = 25, digits = 8)

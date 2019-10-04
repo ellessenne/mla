@@ -6,7 +6,7 @@
 \alias{mla-package}
 \title{An Algorithm for Least-squares Curve Fitting}
 \usage{
-mla(par, fn, gr = NULL, hessian = NULL, control = list(),
+mla(par, fn, gr = NULL, ..., hessian = NULL, control = list(),
   verbose = FALSE)
 }
 \arguments{
@@ -17,6 +17,8 @@ It should return a scalar result.}
 
 \item{gr}{A function to return the gradient value for a specific point.
 If missing, finite-difference approximation will be used.}
+
+\item{...}{Further arguments to be passed to fn and gr.}
 
 \item{hessian}{A function to return the hessian matrix for a specific point.
 If missing, finite-difference approximation will be used.}
