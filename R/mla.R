@@ -190,9 +190,9 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
     fu.int <- fu[1:(m * (m + 1) / 2)]
 
     # Invert hessian
-    tmp.h <- matrix(nrow = m, ncol = m)
+    tmp.h <- matrix(0, nrow = m, ncol = m)
     tmp.h[upper.tri(tmp.h, diag = TRUE)] <- fu.int
-    tmp.h[lower.tri(tmp.h, diag = TRUE)] <- fu.int
+    tmp.h[lower.tri(tmp.h, diag = FALSE)] <- t(tmp.h)[lower.tri(tmp.h, diag = FALSE)]
     dsinv <- list()
     dsinv$fu.out <- solve(tmp.h)[upper.tri(tmp.h, diag = TRUE)]
     fu[1:(m * (m + 1) / 2)] <- dsinv$fu.out
