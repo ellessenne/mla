@@ -17,6 +17,6 @@
 deriva <- function(b, funcpa) {
   g <- numDeriv::grad(func = funcpa, x = b)
   h <- -numDeriv::hessian(func = funcpa, x = b)
-  result <- list(v = c(h[upper.tri(h, diag = TRUE)], g), rl = funcpa(b))
+  result <- list(v = c(h[upper.tri(h, diag = TRUE)], g), rl = funcpa(b), h = h)
   return(result)
 }

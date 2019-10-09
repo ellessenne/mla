@@ -58,13 +58,13 @@
 #' @examples
 #' ### 1
 #' ### initial values
-#' b <- c(8, 9)
+#' par <- c(8, 9)
 #' ### your function
-#' f1 <- function(b) {
+#' fn <- function(b) {
 #'   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
 #' }
 #' ## Call
-#' test1 <- mla(par = b, fn = f1)
+#' test1 <- mla(par = par, fn = fn)
 #' test1
 #'
 #' ### 2
@@ -78,10 +78,16 @@
 #' ## Call
 #' test2 <- mla(par = b, fn = f2)
 #' test2
-mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = FALSE) {
+mla <- function(par, fn, gr = NULL, ..., hessian = NULL, control = list(), verbose = FALSE) {
+  # par <- c(-1, 0, 1)
+  # fun <- function(par) 100 * (par[2] - par[1]^2)^2 + (1 - par[1])^2 + 100 * (par[3] - par[2]^2)^2 + (1 - par[2])^2
+  # gr <- NULL
+  # hessian <- NULL
+  # control <- list()
+  # verbose <- FALSE
 
   # Requires par, fn
-  if (missing(par)) stop("The 'mla' algorithm needs a vector of parameters 'b' or his length 'm'")
+  if (missing(par)) stop("The 'mla' algorithm needs a vector of parameters 'par'")
   if (missing(fn)) stop("The argument 'fn' is missing.")
   b <- par
   m <- length(b)
@@ -247,6 +253,8 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
     }
 
     dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "mla")
+    # dchole <- dchole2(fu, m, nql, 0)
+
     fu <- dchole$fu
     idpos <- dchole$idpos
 
@@ -271,6 +279,7 @@ mla <- function(par, fn, gr = NULL, hessian = NULL, control = list(), verbose = 
       }
 
       dchole <- .Fortran("dchole", fu = as.double(fu), as.integer(m), as.integer(nql), idpos = as.integer(0), PACKAGE = "mla")
+      # dchole <- dchole2(fu, m, nql, 0)
 
       idpos <- dchole$idpos
       fu <- dchole$fu

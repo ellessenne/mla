@@ -86,13 +86,13 @@ Default value is 25.
 \examples{
 ### 1
 ### initial values
-b <- c(8, 9)
+par <- c(8, 9)
 ### your function
-f1 <- function(b) {
+fn <- function(b) {
   return(4 * (b[1] - 5)^2 + (b[2] - 6)^2)
 }
 ## Call
-test1 <- mla(par = b, fn = f1)
+test1 <- mla(par = par, fn = fn)
 test1
 
 ### 2
