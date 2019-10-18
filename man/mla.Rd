@@ -6,7 +6,7 @@
 \alias{mla-package}
 \title{An Algorithm for Least-squares Curve Fitting}
 \usage{
-mla(par, fn, gr = NULL, ..., hessian = NULL, control = list(),
+mla(par, fn, gr = NULL, ..., hessian = FALSE, control = list(),
   verbose = FALSE)
 }
 \arguments{

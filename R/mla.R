@@ -78,7 +78,7 @@
 #' ## Call
 #' test2 <- mla(par = b, fn = f2)
 #' test2
-mla <- function(par, fn, gr = NULL, ..., hessian = NULL, control = list(), verbose = FALSE) {
+mla <- function(par, fn, gr = NULL, ..., hessian = FALSE, control = list(), verbose = FALSE) {
   # Requires par, fn
   if (missing(par)) stop("The 'mla' algorithm needs a vector of parameters 'par'")
   if (missing(fn)) stop("The argument 'fn' is missing.")
@@ -104,8 +104,6 @@ mla <- function(par, fn, gr = NULL, ..., hessian = NULL, control = list(), verbo
   da <- 1E-2
   dm <- as.double(5)
   nql <- 1
-  m1 <- m * (m + 1) / 2
-  ep <- 1E-20
   delta <- rep(0, m)
   b1 <- rep(0, m)
   idpos <- 0
@@ -121,7 +119,7 @@ mla <- function(par, fn, gr = NULL, ..., hessian = NULL, control = list(), verbo
   old.cb <- 1
   old.dd <- 1
   ##
-  repeat{
+  repeat {
     if (sum(!is.finite(b)) > 0) {
       cat("Probably too much accuracy requested...\n")
       cat("Last step values :\n")
@@ -152,17 +150,8 @@ mla <- function(par, fn, gr = NULL, ..., hessian = NULL, control = list(), verbo
     } else {
       v <- NULL
       rl <- funcpa(b)
-
-      if (is.null(hessian)) {
-        h <- -numDeriv::hessian(func = funcpa, x = b)
-        v <- c(v, h[upper.tri(h, diag = TRUE)], grad(b))
-      } else {
-        h <- hessian(b)
-        if (is.matrix(h)) {
-          h <- h[upper.tri(t, diag = TRUE)]
-        }
-        v <- c(v, h, grad(b))
-      }
+      h <- -numDeriv::hessian(func = funcpa, x = b)
+      v <- c(v, h[upper.tri(h, diag = TRUE)], grad(b))
     }
     if ((sum(is.finite(b)) == m) && !is.finite(rl)) {
       cat("Problem of computation. Verify your function specification...\n")
@@ -348,16 +337,11 @@ mla <- function(par, fn, gr = NULL, ..., hessian = NULL, control = list(), verbo
     }
   }
 
-
-  # Compute hessian to return
-  if (!is.null(hessian)) {
-    h <- -hessian(b)
-  } else {
-    h <- -numDeriv::hessian(func = funcpa, x = b)
-  }
-
   if ((istop %in% 2:4) == F) istop <- 1
-  result <- list(par = b, value = -rl, ni = ni, convergence = istop, hessian = h, ca = ca, cb = cb, rdm = dd)
+  result <- list(par = b, value = -rl, ni = ni, convergence = istop)
+  # Compute hessian to return
+  if (hessian) result$hessian <- -numDeriv::hessian(func = funcpa, x = b)
+  result$control <- con
 
   return(result)
 }
