@@ -2,5 +2,3 @@
 
 export(deriva)
 export(mla)
-importFrom(Rcpp,sourceCpp)
-useDynLib(mla, .registration = TRUE)

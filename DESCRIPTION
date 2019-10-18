@@ -38,7 +38,6 @@ RoxygenNote: 6.1.1
 LazyData: true
 ByteCompile: true
 Encoding: UTF-8
-NeedsCompilation: yes
 Imports:
     numDeriv,
     Rcpp
@@ -46,5 +45,3 @@ Suggests:
     knitr,
     testthat,
     covr
-LinkingTo:
-    Rcpp
