@@ -39,8 +39,7 @@ LazyData: true
 ByteCompile: true
 Encoding: UTF-8
 Imports:
-    numDeriv,
-    Rcpp
+    numDeriv
 Suggests:
     knitr,
     testthat,
