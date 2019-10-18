@@ -6,9 +6,9 @@ dchole2 <- function(a, k, nq, idpos) {
   asd <- chol(hessian)
   a[1:(k * (k + 1) / 2)] <- asd[upper.tri(asd, diag = TRUE)]
 
-  # what are the gradients divided for?
-  # for 2/3 parameters they are divided by the diag of the hessian...
-  a[-(1:(k * (k + 1) / 2))] <- a[-(1:(k * (k + 1) / 2))] / diag(hessian)
+  # the last elements are the solution of the hessian and gradients:
+  # it's the step pk of the BFGS algorithm!
+  a[-(1:(k * (k + 1) / 2))] <- solve(hessian, a[-(1:(k * (k + 1) / 2))])
 
   list(fu = a, k = k, nq = nq, idpos = idpos)
 }
