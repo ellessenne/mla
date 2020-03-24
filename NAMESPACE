@@ -2,3 +2,5 @@
 
 export(deriva)
 export(mla)
+importFrom(Rcpp,evalCpp)
+useDynLib(mla)

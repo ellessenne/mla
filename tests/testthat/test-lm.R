@@ -7,7 +7,7 @@ ll <- function(par, data) {
   ll <- -n / 2 * log(2 * pi) - n * log(s) - 1 / (2 * s^2) * sum((data$y - (b0 + b1 * data$x))^2)
   return(-ll)
 }
-make_data <- function(n = 1e4) {
+make_data <- function(n = 1e3) {
   x <- runif(n)
   y <- 1 + 0.5 * x + rnorm(n)
   return(data.frame(y, x))
@@ -15,7 +15,9 @@ make_data <- function(n = 1e4) {
 
 
 testthat::test_that("Check average of estimates from B replication", {
-  res <- vector(mode = "list", length = 100)
+  set.seed(3497657)
+  B <- 100
+  res <- vector(mode = "list", length = B)
   for (i in seq_along(res)) {
     data.tmp <- make_data()
     res[[i]] <- suppressWarnings(mla::mla(par = runif(3), fn = ll, data = data.tmp)$par)
